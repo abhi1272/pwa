@@ -2,3 +2,24 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+  transform: none !important;
+}
+
+.companyTitle{
+  font-size: larger;
+  padding: 10px;
+  font-family: sans-serif;
+  color: brown;
+  cursor: pointer;
+}
+
+.companyTitle:hover{
+  text-decoration: underline;
+  color: grey;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}

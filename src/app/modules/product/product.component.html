@@ -1,0 +1,30 @@
+<div class="container" style="margin-top:2vh" >
+  <br>
+  <div class="row">
+    <!-- <h2 class="ourProduct col-sm-4">Our Products</h2> -->
+    <!-- <button mat-raised-button color="primary" (click)="openDialog()"
+                class="mb-2 ml-2">Add Product</button> -->
+    <!-- <h6 class="col-sm-4"><a [routerLink]="['/product']">Image view</a></h6>
+    <h6 class="col-sm-4"><a [routerLink]="['/product-list']">List view</a></h6> -->
+    <h3 class="ml-4 mt-2">Our Products</h3>
+  </div>
+  <!-- <div class="row">
+    <div class="col-sm-4 companyTitle" (click)="selectCompany('Awzing')">Awzing</div>
+    <div class="col-sm-4 companyTitle" (click)="selectCompany('Oracion')">Oracion</div>
+  </div> -->
+  <br>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 portfolio-item" *ngFor="let prod of productService.storedProductList">
+        <div class="card">
+          <a><img routerLink="view/{{prod.id}}" class="card-img-top"
+              [src]="prod.image" alt=""></a>
+          <div class="card-title text-center">
+            <a style="color: black;font-size: 1.1em; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;" href="#">{{prod.name | uppercase}}</a>
+          </div>
+            <span style="padding: 5px;" class="ml-1">
+              MRP: &#8377; {{prod.MRP}}
+            </span>
+        </div>
+      </div>
+    </div>
+</div>

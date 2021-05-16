@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "localhost:4000/api/v1",
+    "secure": false
+  }
+}

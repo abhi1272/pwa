@@ -70,4 +70,13 @@ export class AuthService {
   resetPassword(obj): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/reset_password`, obj)
   }
+
+  login(loginData) {
+    // this.loggedIn = true
+    return this.http.post(this.apiUrl + '/users/login', loginData)
+  }
+
+  signUP(signUpData) {
+    return this.http.post(this.apiUrl + '/users/signup', signUpData)
+  }
 }
