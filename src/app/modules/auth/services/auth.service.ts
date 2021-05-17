@@ -19,7 +19,7 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable()
   }
 
-  apiUrl = environment.apiUrl
+  apiUrl = environment.url
 
   public get currentUserValue(): any {
     return this.currentUserSubject.value

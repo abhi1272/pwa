@@ -19,7 +19,7 @@ export class SharedService {
     url: '',
     gadgetTitle: ''
   }
-  public apiUrl = environment.apiUrl
+  public apiUrl = environment.url
   apiDetails
   previousFilter
   timeTableEditData
