@@ -62,9 +62,9 @@ export class ProductService {
     return myResponse
   }
 
-  public getPharamProduct(id){
-    return this._http.get(`https://pharmeasy.in/api/categoryDetails/fetchCategoryDetails/${id}`)
-  }
+  // public getPharamProduct(id){
+  //   return this._http.get(`https://pharmeasy.in/api/categoryDetails/fetchCategoryDetails/${id}`)
+  // }
 
   // public sendEmail(emailBody) {
   //   console.log('send email api called')

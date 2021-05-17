@@ -18,19 +18,7 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     console.log(this.productService.storedProductList)
     this.getProductList()
-    for (let i = 0; i < 200; i++) {
-      this.getPharmaProduct(i)
-    }
     // this.getPharmaProduct()
-  }
-
-  getPharmaProduct(id) {
-    this.productService.getPharamProduct(id).subscribe((data) => {
-      if (data['id']) {
-        this.caterGoryList.push(data)
-      }
-      console.log(this.caterGoryList)
-    })
   }
 
   getProductList(){
