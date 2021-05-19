@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 // import {ToastrService } from 'ngx-toastr';
 
@@ -13,38 +14,7 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class ProductService {
 
-  public baseUrl = 'http://localhost:4000/api/v1'
-  // public baseUrl = 'https://omexbackend.herokuapp.com/api/v1'
-  storedProductList = [
-    { id: 1, name: 'Dettol', MRP: '50', image: '../../../assets/img/products/dettol.jpg' },
-    { id: 2, name: 'Complan', MRP: '250', image: '../../../assets/img/products/complan.jpg' },
-    { id: 3, name: 'Chyawanprash', MRP: '200', image: '../../../assets/img/products/chyawanprash.jpg' },
-    { id: 4, name: 'D3-Drop', MRP: '30', image: '../../../assets/img/products/d3_drop.jpg' },
-    {
-      id: 5, name: 'Dettol', MRP: '50', company: 'Reckitt', Rating: "4", image: '../../../assets/img/products/Dettol_big.jpg'
-      // tslint:disable-next-line:max-line-length
-      , Description: 'Dettol Disinfectant Multipurpose Liquid cleaner provides protection to you and your family against illness causing germs. This disinfectant liquid sanitizes your home and also helps maintain your personal hygiene. It can be used in bath, laundry, floor and surface cleaning, leaving everything clean and fresh. This multipurpose disinfenctant cleaner for home is recommended by Indian Medical Association.*Protects from 100 illness causing germs and Coronavirus causing COVID19 virus. Proven to be >99.9% effective at inactivating SARS-CoV-2, the virus that causes COVID19, when used at 1:12 dilutions with 5 minutes contact time when tested under dirty conditions; As per standard testing protocol.'
-    },
-    { id: 6, name: 'Ensure', MRP: '300', image: '../../../assets/img/products/ensure.jpg' },
-    { id: 7, name: 'Horlicks', MRP: '225', image: '../../../assets/img/products/horlicks.jpg' },
-    { id: 8, name: 'Mask', MRP: '50', image: '../../../assets/img/products/mask.jpg' },
-    { id: 9, name: 'Revitel', MRP: '50', image: '../../../assets/img/products/revitel.jpg' },
-    { id: 10, name: 'Sanitiser', MRP: '50', image: '../../../assets/img/products/sanitiser.jpg' },
-    { id: 12, name: 'Dettol', MRP: '50', image: '../../../assets/img/products/dettol.jpg' },
-    { id: 12, name: 'Complan', MRP: '250', image: '../../../assets/img/products/complan.jpg' },
-    { id: 13, name: 'Chyawanprash', MRP: '200', image: '../../../assets/img/products/chyawanprash.jpg' },
-    { id: 14, name: 'D3-Drop', MRP: '30', image: '../../../assets/img/products/d3_drop.jpg' },
-    // tslint:disable-next-line:max-line-length
-    { id: 15, name: 'Dettol', MRP: '50', company: 'Reckitt', Rating: "4", image: '../../../assets/img/products/Dettol_big.jpg', Description: 'Dettol Disinfectant Multipurpose Liquid cleaner provides protection to you and your family against illness causing germs. This disinfectant liquid sanitizes your home and also helps maintain your personal hygiene. It can be used in bath, laundry, floor and surface cleaning, leaving everything clean and fresh. This multipurpose disinfenctant cleaner for home is recommended by Indian Medical Association.*Protects from 100 illness causing germs and Coronavirus causing COVID19 virus. Proven to be >99.9% effective at inactivating SARS-CoV-2, the virus that causes COVID19, when used at 1:12 dilutions with 5 minutes contact time when tested under dirty conditions; As per standard testing protocol.' },
-    { id: 16, name: 'Ensure', MRP: '300', image: '../../../assets/img/products/ensure.jpg' },
-    { id: 17, name: 'Horlicks', MRP: '225', image: '../../../assets/img/products/horlicks.jpg' },
-    { id: 18, name: 'Mask', MRP: '50', image: '../../../assets/img/products/mask.jpg' },
-    { id: 19, name: 'Revitel', MRP: '50', image: '../../../assets/img/products/revitel.jpg' },
-    { id: 20, name: 'Sanitiser', MRP: '50', image: '../../../assets/img/products/sanitiser.jpg' },
-    { id: 21, name: 'Rantac', MRP: '10', image: '../../../assets/img/products/sanitiser.jpg' }
-  ];
-
-
+  public baseUrl = environment.url
 
   constructor(public _http: HttpClient) { }
 
