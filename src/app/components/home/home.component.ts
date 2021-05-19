@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FileUploaderComponent } from 'src/app/modules/shared/modals/file-uploader/file-uploader.component';
+import { SharedService } from 'src/app/modules/shared/services/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -9,18 +10,15 @@ import { FileUploaderComponent } from 'src/app/modules/shared/modals/file-upload
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public sharedService: SharedService) { }
 
   ngOnInit(): void {
   }
 
   public openDialog(): void{
-    const dialogRef = this.dialog.open(FileUploaderComponent, {
-      width: '750px',
-      data: {}
-    })
+    const value = this.sharedService.openDialog({}, FileUploaderComponent, '750px')
 
-    dialogRef.afterClosed().subscribe(result => {
+    value.afterClosed().subscribe(result => {
       console.log('The dialog was closed')
     })
   }

@@ -14,20 +14,22 @@
             routerLink="/product">Product</a></li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
             routerLink="/contact">Contact</a></li>
-        <li class="nav-item" *ngIf="!user"><a class="nav-link font-weight-bold" routerLinkActive="active"
-            routerLink="/login">Login</a></li>
+        <li class="nav-item" *ngIf="!user"><a (click)="openLogin()" class="nav-link font-weight-bold" routerLinkActive="active"
+            >Login</a></li>
         <li class="nav-item" *ngIf="user"><a class="nav-link font-weight-bold cursor-pointer" routerLinkActive="active"
             (click)="logout()">Logout</a></li>
+        <mat-icon *ngIf="sharedService.cartCount" [matBadge]="sharedService.cartCount" matBadgeColor="warn"></mat-icon>
         <li class="nav-item" *ngIf="!user"><a class="nav-link font-weight-bold" routerLinkActive="active"
             routerLink="/cart">Cart</a></li>
-        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
-            routerLink="/product-list">Medicines</a></li>
+        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"routerLink="/product-list">Medicines</a></li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
             routerLink="/pharmacist-list">Pharmacist</a></li>
-        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
-            routerLink="/user-list">Users</a></li>
-            <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
-              routerLink="/role-list">Roles</a></li>
+        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/user-list">Users</a>
+        </li>
+        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/role-list">Roles</a>
+        </li>
+        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/category-list">Category</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -48,7 +50,7 @@
         <p id="txt1">Explore</p>
         <a class="link" [routerLink]="['/product']" routerLinkActive="router-link-active">Product</a>
         <a class="link" [routerLink]="['/order']" routerLinkActive="router-link-active">Order</a>
-        <a class="link" [routerLink]="['/login']" routerLinkActive="router-link-active">Login</a>
+        <a class="link" (click)="openLogin()">Login</a>
         <a class="link" [routerLink]="['/register']" routerLinkActive="router-link-active">Signup</a>
       </div>
       <div id="visit">
