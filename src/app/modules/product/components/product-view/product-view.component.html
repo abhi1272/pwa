@@ -1,1 +1,50 @@
-<p>product-view works!</p>
+<div class="container" style="margin-top: 10vh;" *ngIf="product">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card">
+        <a><img class="card-img-top" [src]="product.image" alt=""></a>
+        <!-- <span style="padding: 5px;" class="ml-1">
+          MRP: &#8377; {{product.MRP}}
+        </span> -->
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div>
+        <h3 class="title">{{product.medicine_name | uppercase}}</h3>
+        <a style="color: skyblue;font-weight: bold;">{{product.manufacturer}}</a>
+        <br><br>
+        <span class="mrp mt-4 mr-2">MRP: {{product.MRP}}</span>
+        <span class="discount">{{discount}} % off</span>
+        <div class="title mt-4 mb-4">
+          Best Price: {{product.best_price}}
+        </div>
+        <button *ngIf="!addToCartFlag" (click)="addToCart()" class="btn btn-primary mt-4">Add To Cart</button>
+        <label *ngIf="addToCartFlag" style="font-weight: bold;">Quantity: &nbsp;</label>
+        <select style="width: 4vw;" class="form-control"  (change)="getCartValue($event.target.value)" *ngIf="addToCartFlag" class="form-select" aria-label="Default select example">
+          <!-- <option selected>select Quantity</option> -->
+          <option *ngFor="let i of quantityCount" [value]="i">{{i}}</option>
+        </select>
+        <!-- <a>-</a>&nbsp;<input type="number">&nbsp;<a>+</a> -->
+      </div>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+    <div class="row mt-4 ml-3">
+      <div class="col-sm-9">
+        <div class="description">
+          <h2>Description</h2>
+          <p>
+            {{product.description}}
+          </p>
+        </div>
+        <div class="description">
+          <h2>Benefits</h2>
+          <ul *ngFor="let ben of product.benefits">
+            <li>{{ben}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

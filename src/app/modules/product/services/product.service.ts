@@ -49,22 +49,23 @@ export class ProductService {
   constructor(public _http: HttpClient) { }
 
 
-  // public createProduct(productData): any {
+  public createProduct(productData): any {
 
-  //   console.log('create product service call')
-  //   let myResponse = this._http.post(this.baseUrl + '/product/upload', productData)
-  //   console.log(productData)
-  //   return myResponse
-  // }
-
-  public getProduct() {
-    let myResponse = this._http.get(this.baseUrl + '/product')
+    console.log('create product service call')
+    const myResponse = this._http.post(this.baseUrl + '/product/add', productData)
     return myResponse
   }
 
-  // public getPharamProduct(id){
-  //   return this._http.get(`https://pharmeasy.in/api/categoryDetails/fetchCategoryDetails/${id}`)
-  // }
+  public getProduct(): Observable<any> {
+    const myResponse = this._http.get(this.baseUrl + '/product')
+    return myResponse
+  }
+
+  public getProductById(uuid): Observable<any> {
+    const myResponse = this._http.get(this.baseUrl + `/product?medicine_id=${uuid}`)
+    return myResponse
+  }
+
 
   // public sendEmail(emailBody) {
   //   console.log('send email api called')
@@ -96,7 +97,7 @@ export class ProductService {
   // }
 
   public addPrescription(data): Observable<any>{
-    return this._http.post(this.baseUrl + '/product/prescription', data)
+    return this._http.post(this.baseUrl + '/medicine/prescription', data)
   }
 
 }

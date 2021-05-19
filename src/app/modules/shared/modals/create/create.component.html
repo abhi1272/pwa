@@ -1,0 +1,58 @@
+<div mat-dialog-title>
+  <div class="row">
+    <div class="col-xs-12">
+      <strong class="text-center">Add {{data.data.config.page_name}}</strong>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-content *ngIf="data.data.config && data.data.config.page_key === 'medicine'">
+  <form [formGroup]="createForm">
+    <div class="form-group">
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Name:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="medicine_name">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Composition:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="composition"
+          placeholder="Add multiple data with comma separated">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Manufacturer:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="manufacturer">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">MRP:</label>
+        <input type="number" class="form-control col-sm-6 mb-4" formControlName="MRP">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Best Price:</label>
+        <input type="number" class="form-control col-sm-6 mb-4" formControlName="best_price">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Category:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="category">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Image:</label>
+        <input type="file" class="form-control col-sm-6 mb-4" name="image" (change)="selectFile($event)" accept=".jpg,.png,.jpeg,.webp" />
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Description:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="description">
+      </div>
+      <div class="row">
+        <label class="col-sm-4 col-form-label">Benefits:</label>
+        <input type="text" class="form-control col-sm-6 mb-4" formControlName="benefits"
+          placeholder="Add multiple data with comma separated">
+      </div>
+
+    </div>
+    <div align=end>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+      <button mat-raised-button color="primary"
+        type="submit" (click)="submit()" class="mr-4 ml-4 mb-2">Save</button>
+    </div>
+  </form>
+</div>

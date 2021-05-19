@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="cartDataValue && cartDataValue.length > 0">
   <div class="row">
       <aside class="col-lg-9">
           <div class="card">
@@ -13,25 +13,22 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr>
+                          <tr *ngFor="let cartItem of cartDataValue">
                               <td>
                                   <figure class="itemside align-items-center">
-                                      <div class="aside"><img src="https://i.imgur.com/1eq5kmC.png" class="img-sm"></div>
+                                      <div class="aside"><img [src]="cartItem.product.image" class="img-sm"></div>
                                       <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Tshirt with round nect</a>
-                                          <p class="text-muted small">SIZE: L <br> Brand: MAXTRA</p>
+                                          <p class="text-muted small">MRP: {{cartItem.product.MRP}} <br> Brand: {{cartItem.product.manufacturer}}</p>
                                       </figcaption>
                                   </figure>
                               </td>
-                              <td> <select style="width: 5vw;" class="form-control">
-                                      <option>1</option>
-                                      <option>2</option>
-                                      <option>3</option>
-                                      <option>4</option>
+                              <td> <select (change)="addCart($event.target.value, cartItem)" style="width: 5vw;" class="form-control">
+                                     <option *ngFor="let count of sharedService.quantityCount" [value]="count" [selected]="cartItem.quantity==count">{{count}}</option>
                                   </select> </td>
                               <td>
-                                  <div class="price-wrap"> <span class="price">&nbsp; &#8377;10.00</span> <small class="text-muted"> $9.20 each </small> </div>
+                                  <div class="price-wrap"> <span class="price">&nbsp; &#8377;{{cartItem.product.best_price*cartItem.quantity}}</span> <small class="text-muted"> &nbsp; &#8377; {{cartItem.product.best_price}} each </small> </div>
                               </td>
-                              <td><a data-abc="true" >
+                              <td><a data-abc="true" (click)="removeProduct(cartItem)">
                                 <span class="material-icons red cursor-pointer">
                                   delete
                                 </span>
@@ -55,20 +52,24 @@
           <div class="card">
               <div class="card-body">
                   <dl class="dlist-align">
-                      <dt>Total price:</dt>
-                      <dd class="text-right ml-3"> &nbsp; &#8377;69.97</dd>
+                      <dt>Total Price:</dt>
+                      <dd class="text-right"> &nbsp; &#8377;{{totalPrice}}</dd>
                   </dl>
                   <dl class="dlist-align">
                       <dt>Discount:</dt>
-                      <dd class="text-right text-danger ml-3">&nbsp; &#8377;10.00</dd>
+                      <dd class="text-right text-danger ml-3">&nbsp; &#8377;{{totalDiscount}}</dd>
                   </dl>
                   <dl class="dlist-align">
                       <dt>Total:</dt>
-                      <dd class="text-right text-dark b ml-3"><strong> &nbsp; &#8377;59.97</strong></dd>
+                      <dd class="text-right text-dark b ml-4"><strong> &nbsp;  &nbsp; &#8377;{{totalPrice - totalDiscount}}</strong></dd>
                   </dl>
-                  <hr> <a href="#" class="btn btn-primary btn-main" data-abc="true"> Checkout </a> <a href="#" class="btn btn-success btn-main mt-2" data-abc="true">Continue Shopping</a>
+                  <hr> <a href="#" class="btn btn-primary btn-main" data-abc="true"> Checkout </a> <a routerLink="/product" class="btn btn-success btn-main mt-2" data-abc="true">Continue Shopping</a>
               </div>
           </div>
       </aside>
   </div>
+</div>
+<div  *ngIf="cartDataValue && cartDataValue.length === 0" style="text-align: center;">
+  <img class="img-responsive mt-4" src="../../../../../assets/img/emptyCart.png">
+  <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">Cart is Empty !</h2>
 </div>

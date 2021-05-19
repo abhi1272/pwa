@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { Component, Inject, OnInit } from '@angular/core'
+import { AuthService } from '../../services/auth.service'
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 @Component({
   selector: 'app-login',
@@ -12,21 +13,24 @@ import { ToastrService } from 'ngx-toastr';
 
 export class LoginComponent implements OnInit {
 
-  constructor(public authService: AuthService, public router: Router,
+  constructor(public dialogRef: MatDialogRef<any>,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public authService: AuthService, public router: Router,
               private toastr: ToastrService) { }
 
   loginForm: FormGroup
 
-  ngOnInit() {
+  ngOnInit(): void {
+    console.log('oninit called')
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     })
   }
 
-  public submit() {
+  public submit(): void {
     this.authService.login(this.loginForm.value).subscribe((data) => {
-      localStorage.setItem('user', JSON.stringify(data['data']['user']))
+      localStorage.setItem('user', JSON.stringify(data['data'].user))
       this.toastr.success(data['message'])
       this.router.navigate(['/home'])
     }, (error) => {

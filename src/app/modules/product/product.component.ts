@@ -21,15 +21,12 @@ export class ProductComponent implements OnInit {
     // this.getPharmaProduct()
   }
 
-  getProductList(){
-    this.productService.getProduct().subscribe((data)=>{
+  getProductList() {
+    this.productService.getProduct().subscribe((data) => {
+      console.log('----data----', data)
       this.productList = data['data']
-      this.productList.forEach((item) => {
-        item.image = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/jpg;base64,${item.image}`);
-      })
-      //this.productService.storedProductList = this.productList
-      this.selectCompany('Awzing')
-    },(error)=>{
+    }, (error) => {
+      console.log(error)
     })
   }
 
