@@ -16,17 +16,21 @@ export class ProductViewComponent implements OnInit {
   constructor(public route: ActivatedRoute, public sharedService: SharedService) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = params.id
+      this.getProductData()
+  })
     const currentCartData = this.sharedService.getCartData()
-    console.log('current', currentCartData)
-    this.id = this.route.snapshot.params.id
     this.quantityCount = this.sharedService.quantityCount
-    this.getProductData()
   }
 
   getProductData(): void {
-    this.sharedService.getDataById('product', this.id).subscribe((data) => {
-      this.product = this.dataCorrection(data.data)
-      this.discount = Math.round((this.product.best_price / this.product.MRP) * 10)
+    this.sharedService.getDataById('medicine', this.id).subscribe((data) => {
+      if (data.data) {
+        this.product = this.dataCorrection(data.data)
+        console.log(this.product)
+        this.discount = Math.round((this.product.best_price / this.product.MRP) * 10)
+      }
     }, (error) => {
       console.log(error)
     })
@@ -42,7 +46,8 @@ export class ProductViewComponent implements OnInit {
       uuid: this.product.uuid,
       quantity: val
     }
-    if (val === 0) {
+    console.log('val', val)
+    if (+val === 0) {
       this.removeProduct(this.product)
     } else {
       this.sharedService.addInCart(cartObj)
@@ -57,7 +62,8 @@ export class ProductViewComponent implements OnInit {
   }
 
   public dataCorrection(product): void{
-    product.benefits = product.benefits.split(',')
+    product.benefits = product.benefits && product.benefits.split(',')
+    product.composition = product.composition && product.composition[0].split(',')
     product.best_price = +product.best_price
     product.MRP = +product.MRP
     return product

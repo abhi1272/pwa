@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { LoginComponent } from 'src/app/modules/auth/components/login/login.component';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SharedService } from 'src/app/modules/shared/services/shared.service';
 
 @Component({
@@ -10,7 +12,8 @@ export class CartComponent implements OnInit {
   cartDataValue
   totalPrice = 0
   totalDiscount = 0
-  constructor(public sharedService: SharedService) { }
+  @Input() page
+  constructor(public sharedService: SharedService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.cartDataValue = this.sharedService.getCartData()
@@ -45,6 +48,12 @@ export class CartComponent implements OnInit {
       this.totalPrice += item.product.MRP * +item.quantity
       this.totalDiscount += (item.product.MRP - +item.product.best_price) * +item.quantity
     })
+    this.totalPrice = Math.round(this.totalPrice)
+    this.totalDiscount = Math.round(this.totalDiscount)
+  }
+
+  public openLoginPage(): void {
+    this.sharedService.openDialog({}, LoginComponent, '')
   }
 
 }

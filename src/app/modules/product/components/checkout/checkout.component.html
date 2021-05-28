@@ -1,0 +1,152 @@
+<div class="container address" *ngIf="!orderPlaced">
+  <nav aria-label="breadcrumb" style="margin-top: -4vh;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLinkActive="active"><a routerLink="/home" >Home</a></li>
+      <li class="breadcrumb-item" routerLinkActive="active"><a routerLink="/cart" >Cart</a></li>
+      <li class="breadcrumb-item"  routerLinkActive="active" aria-current="page">Checkout</li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="col-sm-6 col-xs-12" *ngIf="!addNewAddressFlag && authService.user">
+      <div class="card" *ngFor="let address of authService.user.address">
+        <div class="card-body" *ngIf="authService.user" style="display: flex;">
+          <!-- <input (change)="selectAddress($event.target.value)" type="radio" class="radio mr-2 font-weight-bold"/> -->
+          <div>
+            <p class="card-text">{{address.firstName}} {{address.lastName}}</p>
+            <p class="card-text">{{address.address}}</p>
+            <p class="card-text">{{address.city}} {{address.state}}</p>
+            <p class="card-text">{{address.pinCode}}</p>
+            <p class="card-text"><strong>{{address.phoneNumber}}</strong></p>
+          </div>
+         </div>
+      </div>
+      <button *ngIf="authService.user.address.length > 0" (click)="placeOrder()" class="btn btn-primary float-right ml-2">Place Order</button>
+      <!-- <button *ngIf="authService.user.address.length > 0" class="btn btn-primary" (click)="goBackToAddress()" style="float: right;">Back To Address</button> -->
+      <button *ngIf="authService.user.address.length ===0" (click)="addNewAddress()" class="btn btn-primary float-right mt-4">Add Address</button>
+      <button  *ngIf="authService.user.address.length > 0" (click)="editAddress()" class="btn btn-primary float-right">Edit Address</button>
+    </div>
+    <form class="col-sm-6 col-xs-12 mt-4" *ngIf="!authService.user || addNewAddressFlag" [formGroup]="addressForm">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput">First Name:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="firstName" name="firstName" formControlName="firstName" name="firstName" placeholder="Enter First Name">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Last Name:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" formControlName="lastName" name="lastName" placeholder="Enter Last Name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Address:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="address" name="address" placeholder="Enter Address">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput">City:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="city" name="city" placeholder="Enter City">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput">State:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="state" name="state" placeholder="Enter State">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Pin Code:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="pinCode" name="pinCode" placeholder="Enter Pin code">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput">Phone Number:</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" formControlName="phoneNumber" name="phoneNumber" placeholder="Enter Number">
+          </div>
+        </div>
+      </div>
+      <button *ngIf="authService.user.address.length > 0" class="btn btn-primary ml-2" (click)="addAddress()" style="float: right;">Save Address</button>
+      <button *ngIf="authService.user.address.length > 0" class="btn btn-primary" (click)="goBackToAddress()" style="float: right;">Back To Address</button>
+      <button *ngIf="authService.user.address.length === 0" class="btn btn-primary" [disabled]="!addressForm.valid" (click)="addAddress()" style="float: right;">Add Address</button>
+
+    </form>
+    <div class="col-sm-6 col-xs-12">
+      <div *ngIf="cartDataValue && cartDataValue.length > 0">
+        <div class="card" style="margin-top: 3vh;">
+          <div class="row mt-2 ml-1">
+            <div class="col-sm-7 font-weight-bold" style="color:lightblue;">
+              Review cart
+            </div>
+            <div class="col-sm-5 font-weight-bold">Total Price: &#8377;{{totalPrice - totalDiscount}}</div>
+          </div>
+          <hr>
+          <div class="table-responsive">
+            <table class="table table-borderless table-shopping-cart">
+              <thead class="text-muted">
+                <tr class="small text-uppercase">
+                  <th scope="col" width="400px">Product</th>
+                  <th scope="col" width="300px">Quantity</th>
+                  <th scope="col" width="250px">Price</th>
+                  <th scope="col" width="100px"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cartItem of cartDataValue">
+                  <td>
+                    <figure class="itemside align-items-center">
+                      <div class="aside"><img [src]="cartItem.product.image?cartItem.product.image:'../../../../../assets/img/defaultproduct.png'" class="img-sm"></div>
+                      <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">{{cartItem.product.medicine_name}}</a>
+                          <p class="text-muted small">MRP: {{cartItem.product.MRP}} <br> Brand: {{cartItem.product.manufacturer}}</p>
+                      </figcaption>
+                    </figure>
+                  </td>
+                  <td> <select (change)="addCart($event.target.value, cartItem)" style="width: 5vw;"
+                      class="form-control">
+                      <option *ngFor="let count of sharedService.quantityCount" [value]="count"
+                        [selected]="cartItem.quantity==count">{{count}}</option>
+                    </select> </td>
+                  <td>
+                    <div class="price-wrap"> <span class="price">&nbsp;
+                        &#8377;{{cartItem.product.best_price*cartItem.quantity}}</span> <small class="text-muted">
+                        &nbsp;
+                        &#8377; {{cartItem.product.best_price}} each </small> </div>
+                  </td>
+                  <td><a data-abc="true" (click)="removeProduct(cartItem)">
+                      <span class="material-icons red cursor-pointer">
+                        delete
+                      </span>
+                    </a> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container center-screen" *ngIf="orderPlaced">
+  <img src="../../../../../assets/img/3500833.png" class="img-responsive mb-2">
+  <h2>Thank You!</h2>
+  <h3>Order #1234 Placed Successfully</h3>
+  <h3>Estimated Delivery Date: 22.02.19</h3>
+  <h3>Cash on Delivery</h3>
+  <p class="text-muted">
+    Will keep you posted about the order via sms.
+  </p>
+    <strong>Note:</strong> <p style="color: red;">
+      Order Might get delayed due to Pandemic.
+    </p>
+    <button class="btn btn-primary mt-2" routerLink="/home">Shop More</button>
+</div>

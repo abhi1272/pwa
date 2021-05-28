@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup
 
   ngOnInit(): void {
-    console.log('oninit called')
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -31,10 +30,12 @@ export class LoginComponent implements OnInit {
   public submit(): void {
     this.authService.login(this.loginForm.value).subscribe((data) => {
       localStorage.setItem('user', JSON.stringify(data['data'].user))
+      this.authService.user = data['data'].user
       this.toastr.success(data['message'])
       this.router.navigate(['/home'])
     }, (error) => {
-      this.toastr.success(error)
+      console.log(error)
+      this.toastr.error('user id or password is incorrect')
     })
   }
 }

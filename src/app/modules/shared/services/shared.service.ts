@@ -84,6 +84,7 @@ export class SharedService {
   }
 
   public removeFromCart(productObj): void {
+    console.log('remove from acrt')
     const currentCartData = this.getCartData()
     const index = currentCartData.findIndex(item => item.uuid === productObj.uuid)
     currentCartData.splice(index, 1)

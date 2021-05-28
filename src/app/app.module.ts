@@ -21,6 +21,7 @@ import { FileUploaderComponent } from './modules/shared/modals/file-uploader/fil
 import { NgxImageCompressService } from 'ngx-image-compress'
 import { SharedModule } from './modules/shared/shared.module';
 import { CoreModule } from './modules/core/core.module';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete'
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { CoreModule } from './modules/core/core.module';
     ProductModule,
     SharedModule,
     CoreModule,
+    AutocompleteLibModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     ToastrModule.forRoot()

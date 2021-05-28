@@ -1,8 +1,15 @@
-<div class="container" style="margin-top: 10vh;" *ngIf="product">
-  <div class="row">
+<div class="container" style="margin-top: 5vh;" *ngIf="product">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLinkActive="active"><a routerLink="/home" >Home</a></li>
+      <li class="breadcrumb-item" routerLinkActive="active"><a routerLink="/product" >Product</a></li>
+      <li class="breadcrumb-item"  routerLinkActive="active" aria-current="page">View</li>
+    </ol>
+  </nav>
+  <div class="row" *ngIf="product">
     <div class="col-sm-3">
       <div class="card">
-        <a><img class="card-img-top" [src]="product.image" alt=""></a>
+        <a><img class="card-img-top" [src]="product.image?product.image:'../../../../../assets/img/defaultproduct.png'" alt=""></a>
         <!-- <span style="padding: 5px;" class="ml-1">
           MRP: &#8377; {{product.MRP}}
         </span> -->
@@ -21,10 +28,9 @@
         <button *ngIf="!addToCartFlag" (click)="addToCart()" class="btn btn-primary mt-4">Add To Cart</button>
         <label *ngIf="addToCartFlag" style="font-weight: bold;">Quantity: &nbsp;</label>
         <select style="width: 4vw;" class="form-control"  (change)="getCartValue($event.target.value)" *ngIf="addToCartFlag" class="form-select" aria-label="Default select example">
-          <!-- <option selected>select Quantity</option> -->
           <option *ngFor="let i of quantityCount" [value]="i">{{i}}</option>
-        </select>
-        <!-- <a>-</a>&nbsp;<input type="number">&nbsp;<a>+</a> -->
+        </select><br>
+        <button *ngIf="addToCartFlag" routerLink="/cart" class="btn btn-primary mt-4">Go To Cart</button>
       </div>
     </div>
     <div class="col-sm-3">
@@ -32,13 +38,19 @@
     </div>
     <div class="row mt-4 ml-3">
       <div class="col-sm-9">
-        <div class="description">
+        <div class="description" *ngIf="product.description">
           <h2>Description</h2>
           <p>
             {{product.description}}
           </p>
         </div>
-        <div class="description">
+        <div class="description" *ngIf="product.composition">
+          <h2>Ingredients</h2>
+          <ul *ngFor="let comp of product.composition">
+            <li>{{comp}}</li>
+          </ul>
+        </div>
+        <div class="description" *ngIf="product.benefits">
           <h2>Benefits</h2>
           <ul *ngFor="let ben of product.benefits">
             <li>{{ben}}</li>
@@ -48,3 +60,4 @@
     </div>
   </div>
 </div>
+<br><br>

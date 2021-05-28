@@ -1,12 +1,33 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
   <div class="container navbar-inner">
     <a class="navbar-brand img-fluid" routerLink="/home"><img class="logo img-responsive" src="">ePharmacy</a>
+
     <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isCollapsed = !isCollapsed"
       data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse" [attr.aria-expanded]="!isCollapsed" [ngClass]="{collapse: !isCollapsed}">
+      <div class="ng-autocomplete ml-4">
+        <ng-autocomplete
+          [data]="products"
+          [searchKeyword]="keyword"
+          placeholder="Enter the Medicine Name"
+          (selected)='selectEvent($event)'
+          (inputChanged)='onChangeSearch($event)'
+          historyIdentifier="products"
+          [itemTemplate]="itemTemplate"
+          [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.medicine_name"></a>
+        </ng-template>
+
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
       <ul class="nav navbar-nav ml-auto" (click)="isCollapsed = !isCollapsed">
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/home">Home</a>
         </li>
@@ -14,26 +35,40 @@
             routerLink="/product">Product</a></li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
             routerLink="/contact">Contact</a></li>
-        <li class="nav-item" *ngIf="!user"><a (click)="openLogin()" class="nav-link font-weight-bold" routerLinkActive="active"
+        <li class="nav-item cursor-pointer" *ngIf="!authService.user"><a routerLink="/login" class="nav-link font-weight-bold" routerLinkActive="active"
             >Login</a></li>
-        <li class="nav-item" *ngIf="user"><a class="nav-link font-weight-bold cursor-pointer" routerLinkActive="active"
-            (click)="logout()">Logout</a></li>
-        <mat-icon *ngIf="sharedService.cartCount" [matBadge]="sharedService.cartCount" matBadgeColor="warn"></mat-icon>
-        <li class="nav-item" *ngIf="!user"><a class="nav-link font-weight-bold" routerLinkActive="active"
-            routerLink="/cart">Cart</a></li>
-        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"routerLink="/product-list">Medicines</a></li>
+        <!-- <li class="nav-item" *ngIf="authService.user"><a class="nav-link font-weight-bold cursor-pointer" routerLinkActive="active"
+            (click)="logout()">Logout</a></li> -->
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
+            routerLink="/cart">Cart
+            <span *ngIf="sharedService.cartCount" class="badge badge-info">{{sharedService.cartCount}}</span></a>
+          </li>
+        <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"routerLink="/product-list">Medicines</a></li>
+        <!-- <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active"
             routerLink="/pharmacist-list">Pharmacist</a></li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/user-list">Users</a>
         </li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/role-list">Roles</a>
         </li>
         <li class="nav-item"><a class="nav-link font-weight-bold" routerLinkActive="active" routerLink="/category-list">Category</a>
+        </li> -->
+        <li class="nav-item" *ngIf="authService.user">
+          <div class="dropdown nav-link">
+            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img style="width: 1.2vw;border-radius: 50%;" src="../assets/img/user-icon.jpg" class="img-reponsive">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item">{{authService.user.firstName}}</a>
+              <a class="dropdown-item cursor-pointer"routerLink="/order">Orders</a>
+              <a class="dropdown-item cursor-pointer"(click)="logout()">Logout</a>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
 <br><br>
 <div class="main">
   <router-outlet></router-outlet>

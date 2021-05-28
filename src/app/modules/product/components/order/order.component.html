@@ -1,0 +1,95 @@
+<div class="container" style="margin-top: 10vh;" *ngIf="authService.user && !userOrderData">
+  <h1 style="color: lightblue;">Orders</h1>
+  <table class="table table-striped">
+    <tbody>
+      <tr class="cursor-pointer" *ngFor="let userOrder of authService.user.orders">
+        <th scope="row">
+          <h2>#{{userOrder.time}}{{userOrder.orderNo}}</h2>
+          <p class="mute">{{userOrder.time | date:'medium'}}</p>
+        </th>
+        <td>
+          <h2 class="mute">
+            {{userOrder.shippingAddress.firstName}} {{userOrder.shippingAddress.lastName}}
+          </h2>
+          <p> {{userOrder.products.length}}</p>
+        </td>
+        <td>
+          <h2>
+            &#8377; {{userOrder.amount.netPrice | number:'1.0-0'}}
+          </h2>
+        </td>
+        <td>
+          <div class="col-sm-3">
+            <h2>
+              DELIVERED
+            </h2>
+          </div>
+        </td>
+        <td (click)="showOrderDetails(userOrder)">
+          <span class="material-icons">
+            chevron_right
+          </span>
+          <div (click)="downloadBill(userOrder)">
+            <span matTooltip="Download Bill for the order" class="material-icons">
+              download
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container" style="margin-top: 10vh;" *ngIf="userOrderData">
+  <div (click)="gotoOrders()" style="color: lightblue;" class="cursor-pointer"><h1>Back To Orders</h1></div>
+  <div class="card" style="margin-top: 3vh;">
+    <div class="row mt-2 ml-1">
+      <div class="col-sm-8 font-weight-bold">
+        Order Details #{{userOrderData.time}}{{userOrderData.orderNo}}
+      </div>
+      <div class="col-sm-3 font-weight-bold">Total Price: &#8377;{{userOrderData.amount.netPrice | number:'1.0-0'}}
+      </div>
+      <div class="col-sm-1 cursor-pointer" (click)="downloadBill(userOrder)" style="float: right;padding: 1vh;">
+        <span matTooltip="Download Bill for the order" class="material-icons">
+          download
+        </span>
+      </div>
+    </div>
+    <hr>
+    <div class="table-responsive">
+      <table class="table table-borderless table-shopping-cart">
+        <thead class="text-muted">
+          <tr class="small text-uppercase">
+            <th scope="col" width="400px">Product</th>
+            <th scope="col" width="300px">Quantity</th>
+            <th scope="col" width="250px">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userOrderData.products">
+            <td>
+              <figure class="itemside align-items-center">
+                <div class="aside"><img
+                    [src]="item.product.image?item.product.image:'../../../../../assets/img/defaultproduct.png'"
+                    class="img-sm"></div>
+                <figcaption class="info"> <a href="#" class="title text-dark"
+                    data-abc="true">{{item.product.medicine_name}}</a>
+                  <p class="text-muted small">MRP: {{item.product.MRP}} <br> Brand: {{item.product.manufacturer}}</p>
+                </figcaption>
+              </figure>
+            </td>
+            <td>
+              <span class="mt-4">{{item.quantity}}</span>
+            </td>
+            <td>
+              <div class="price-wrap"> <span class="price">&nbsp;
+                  &#8377;{{item.product.best_price*item.quantity}}</span> <small class="text-muted">
+                  &nbsp;
+                  &#8377; {{item.product.best_price}} each </small> </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

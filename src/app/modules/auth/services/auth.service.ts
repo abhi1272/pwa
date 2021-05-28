@@ -14,6 +14,7 @@ export class AuthService {
   public currentUser: Observable<any>
   public roleNavigationData
   public accountLogo
+  public user
   constructor(public http: HttpClient, public router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')))
     this.currentUser = this.currentUserSubject.asObservable()
@@ -71,12 +72,12 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/users/reset_password`, obj)
   }
 
-  login(loginData) {
+  login(loginData): Observable<any>  {
     // this.loggedIn = true
     return this.http.post(this.apiUrl + '/users/login', loginData)
   }
 
-  signUP(signUpData) {
+  signUP(signUpData): Observable<any>  {
     return this.http.post(this.apiUrl + '/users/signup', signUpData)
   }
 }

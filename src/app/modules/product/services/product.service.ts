@@ -70,4 +70,17 @@ export class ProductService {
     return this._http.post(this.baseUrl + '/medicine/prescription', data)
   }
 
+
+  public getUser(data): any{
+    return this._http.patch(this.baseUrl + '/users/profile', data)
+  }
+
+  public updateUser(data): Observable<any>{
+    return this._http.patch(this.baseUrl + '/users/profile', data)
+  }
+
+  public downloadBill(data): Observable<any>{
+    return this._http.get(this.baseUrl + `/product/invoice?data=${JSON.stringify(data)}`, {observe: 'response', responseType: 'blob'})
+  }
+
 }
